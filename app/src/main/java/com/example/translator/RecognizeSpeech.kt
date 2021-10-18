@@ -4,23 +4,21 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.speech.RecognizerIntent
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
+import com.example.translator.state.LocaleState
 import java.util.*
 
-// TODO: make the locale as input?
-class RecognizeSpeech : ActivityResultContract<Unit, String?>() {
-    override fun createIntent(context: Context, input: Unit?): Intent {
-        val intent = Intent(
-            RecognizerIntent
-                .ACTION_RECOGNIZE_SPEECH
-        )
+class RecognizeSpeech : ActivityResultContract<Locale, String?>() {
+    override fun createIntent(context: Context, input: Locale?): Intent {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(
             RecognizerIntent.EXTRA_LANGUAGE_MODEL,
             RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
         )
         intent.putExtra(
             RecognizerIntent.EXTRA_LANGUAGE,
-            Locale.getDefault() // TODO: let user specify language
+            input.toString()
         )
 
         return intent
