@@ -11,14 +11,8 @@
         android:id="@+id/camera_button"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginStart="157dp"
-        android:layout_marginTop="340dp"
-        android:layout_marginEnd="157dp"
-        android:layout_marginBottom="341dp"
         android:text="Camera"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="158dp"
+        tools:layout_editor_absoluteY="341dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

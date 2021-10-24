@@ -2,24 +2,29 @@ package com.example.translator
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.SurfaceView
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
+import android.widget.ImageView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import org.opencv.android.CameraBridgeViewBase
-import org.opencv.android.OpenCVLoader
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizer
+import com.google.mlkit.vision.text.devanagari.DevanagariTextRecognizerOptions
 import org.opencv.core.Mat
 import org.opencv.core.CvType
 
-import org.opencv.android.LoaderCallbackInterface
-import org.opencv.android.BaseLoaderCallback
-
-
-
+import android.view.MotionEvent
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.Text
+import org.opencv.android.*
+import org.opencv.core.Core
+import java.lang.Exception
 
 
 class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListener2{
@@ -29,6 +34,15 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
     private lateinit var mRgba: Mat
     private lateinit var mGray: Mat
     private lateinit var mOpenCvCameraView: CameraBridgeViewBase
+
+    private lateinit var translate_button: ImageView
+    private lateinit var take_picture_button: ImageView
+    private lateinit var show_image_button: ImageView
+
+    private lateinit var textRecognizer: TextRecognizer
+    private lateinit var bitmap: Bitmap
+    private var camera_recognizeText = "camera"
+
     private val mLoaderCallback: BaseLoaderCallback = object : BaseLoaderCallback(this) {
         override fun onManagerConnected(status: Int) {
             when (status) {
@@ -60,6 +74,76 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
         mOpenCvCameraView=findViewById(R.id.frame_Surface)
         mOpenCvCameraView.visibility = SurfaceView.VISIBLE
         mOpenCvCameraView.setCvCameraViewListener(this)
+
+        textRecognizer = TextRecognition.getClient(DevanagariTextRecognizerOptions.Builder().build())
+        take_picture_button = findViewById(R.id.take_picture)
+        take_picture_button.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                if(event.action == MotionEvent.ACTION_DOWN) {
+                    return true
+                }
+
+                if(event.action == MotionEvent.ACTION_UP) {
+                    if(camera_recognizeText == "Camera") {
+                        take_picture_button.setColorFilter(Color.DKGRAY)
+                        var a = mRgba.t()
+                        Core.flip(a, mRgba, 1)
+                        a.release()
+                        bitmap=Bitmap.createBitmap(mRgba.cols(), mRgba.rows(), Bitmap.Config.ARGB_8888)
+                        Utils.matToBitmap(mRgba, bitmap)
+                        mOpenCvCameraView.disableView()
+                        camera_recognizeText = "recognizeText"
+                    }
+                    return true
+                }
+                return false
+            }
+        })
+
+        translate_button = findViewById(R.id.translate_button)
+        translate_button.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                if(event.action == MotionEvent.ACTION_DOWN) {
+                    translate_button.setColorFilter(Color.DKGRAY)
+                    return true
+                }
+
+                if(event.action == MotionEvent.ACTION_UP) {
+                    translate_button.setColorFilter(Color.WHITE)
+                    if(camera_recognizeText == "recognizeText") {
+                        var image = InputImage.fromBitmap(bitmap, 0)
+                        var result = textRecognizer.process(image)
+                            .addOnSuccessListener(object : OnSuccessListener<Text>{
+                                override fun onSuccess(p0: Text) {
+                                    TODO("Not yet implemented")
+                                }
+                            })
+                            .addOnFailureListener(object: OnFailureListener {
+                                override fun onFailure(p0: Exception) {
+                                    TODO("Not yet implemented")
+                                }
+                            })
+                    }
+                    return true
+                }
+                return false
+            }
+        })
+
+        show_image_button = findViewById(R.id.gallery_button_image)
+        show_image_button.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+                if(event.action == MotionEvent.ACTION_DOWN) {
+                    return true
+                }
+
+                if(event.action == MotionEvent.ACTION_UP) {
+                    return true
+                }
+                return false
+            }
+        })
+
     }
 
     fun CameraActivity() {
