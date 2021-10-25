@@ -9,9 +9,9 @@ import android.content.Intent
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var cameraButton:Button
+    private lateinit var cameraButton: Button
     private companion object Private private val tag = "MainActivity"
-
+    private lateinit var storage_ImageP_button: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +29,16 @@ class MainActivity : AppCompatActivity() {
                 Intent(
                     this@MainActivity,
                     Recognition::class.java
+                ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            )
+        }
+
+        storage_ImageP_button = findViewById(R.id.storage_ImageP_button)
+        storage_ImageP_button.setOnClickListener {
+            startActivity(
+                Intent(
+                    this@MainActivity,
+                    StorageRecognitionActivity::class.java
                 ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             )
         }

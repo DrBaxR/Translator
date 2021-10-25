@@ -18,6 +18,8 @@ import org.opencv.core.Mat
 import org.opencv.core.CvType
 
 import android.view.MotionEvent
+import android.widget.TextView
+import android.widget.Toast
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.mlkit.vision.common.InputImage
@@ -38,6 +40,8 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
     private lateinit var translate_button: ImageView
     private lateinit var take_picture_button: ImageView
     private lateinit var show_image_button: ImageView
+    private lateinit var current_image: ImageView
+    private lateinit var textView: TextView
 
     private lateinit var textRecognizer: TextRecognizer
     private lateinit var bitmap: Bitmap
@@ -76,6 +80,9 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
         mOpenCvCameraView.setCvCameraViewListener(this)
 
         textRecognizer = TextRecognition.getClient(DevanagariTextRecognizerOptions.Builder().build())
+
+        textView=findViewById(R.id.textView)
+        textView.visibility=View.GONE
         take_picture_button = findViewById(R.id.take_picture)
         take_picture_button.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent): Boolean {
@@ -84,8 +91,8 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
                 }
 
                 if(event.action == MotionEvent.ACTION_UP) {
-                    if(camera_recognizeText == "Camera") {
-                        take_picture_button.setColorFilter(Color.DKGRAY)
+                    if(camera_recognizeText == "camera") {
+                        take_picture_button.setColorFilter(Color.WHITE) //
                         var a = mRgba.t()
                         Core.flip(a, mRgba, 1)
                         a.release()
@@ -93,6 +100,8 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
                         Utils.matToBitmap(mRgba, bitmap)
                         mOpenCvCameraView.disableView()
                         camera_recognizeText = "recognizeText"
+                    } else {
+                        Toast.makeText(this@Recognition, "Please take a picture", Toast.LENGTH_LONG).show()
                     }
                     return true
                 }
@@ -104,25 +113,29 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
         translate_button.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent): Boolean {
                 if(event.action == MotionEvent.ACTION_DOWN) {
-                    translate_button.setColorFilter(Color.DKGRAY)
+                    translate_button.setColorFilter(Color.WHITE) //
                     return true
                 }
-
                 if(event.action == MotionEvent.ACTION_UP) {
-                    translate_button.setColorFilter(Color.WHITE)
+                    translate_button.setColorFilter(Color.DKGRAY)
                     if(camera_recognizeText == "recognizeText") {
+                        textView.visibility=View.VISIBLE
                         var image = InputImage.fromBitmap(bitmap, 0)
                         var result = textRecognizer.process(image)
                             .addOnSuccessListener(object : OnSuccessListener<Text>{
                                 override fun onSuccess(p0: Text) {
-                                    TODO("Not yet implemented")
+                                    textView.setText(p0.text)
+                                    Log.d("CameraActivity", "Out" + p0.text)
                                 }
                             })
                             .addOnFailureListener(object: OnFailureListener {
                                 override fun onFailure(p0: Exception) {
                                     TODO("Not yet implemented")
+                                    Log.d("CameraActivity", "Out not working")
                                 }
                             })
+                    }else {
+                        Toast.makeText(this@Recognition, "Please take a picture", Toast.LENGTH_LONG).show()
                     }
                     return true
                 }
@@ -134,10 +147,16 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
         show_image_button.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent): Boolean {
                 if(event.action == MotionEvent.ACTION_DOWN) {
+                    show_image_button.setColorFilter(Color.WHITE) //
                     return true
                 }
-
                 if(event.action == MotionEvent.ACTION_UP) {
+                    show_image_button.setColorFilter(Color.DKGRAY)
+                    if(camera_recognizeText == "recognizeText") {
+
+                    } else {
+                        Toast.makeText(this@Recognition, "Please take a picture", Toast.LENGTH_LONG).show()
+                    }
                     return true
                 }
                 return false
