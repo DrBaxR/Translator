@@ -14,7 +14,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.devanagari.DevanagariTextRecognizerOptions
@@ -23,7 +25,6 @@ import java.io.IOException
 class StorageRecognitionActivity : AppCompatActivity() {
 
     private lateinit var select_image: Button
-    private lateinit var test: Button
     private lateinit var recognizeImage_button: ImageView
     private lateinit var image_view: ImageView
     private lateinit var text_view: TextView
@@ -37,18 +38,9 @@ class StorageRecognitionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_storage_recognition)
-        Log.d("storage_Activity", "aAaaaaaaaaaaaaaaaaaaXXX")
-        test = findViewById(R.id.test123)
-
-
-
-        test.setOnClickListener{
-            Log.d("storage_Activity", "HEEEERE")
-        }
 
         select_image = findViewById(R.id.select_image)
         select_image.setOnClickListener {
-                Log.d("storage_Activity", "HEEEERE")
                 image_chooser()
         }
 
@@ -91,8 +83,8 @@ class StorageRecognitionActivity : AppCompatActivity() {
 
     override fun onActivityResult(resultCode: Int, requestCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == RESULT_OK) {
-            if(requestCode == Selected_Picture){
+        if(requestCode == RESULT_OK) {
+            if(resultCode == Selected_Picture){
                 val selectedImageUri = data?.data
                 if(selectedImageUri != null) {
                     Log.d("storage_Activity", "Output Uri: " + selectedImageUri)
@@ -103,13 +95,10 @@ class StorageRecognitionActivity : AppCompatActivity() {
                         e.printStackTrace()
                     }
                     val image = InputImage.fromBitmap(bitmap, 0)
+                    var result: Task<Text> = textRecognizer.process(image)
+                         text_view.setText(result.result.text)
+                    Log.d("StorageAction", "Out: " + result.result.text)
 
-                    textRecognizer.process(image)
-                        .addOnSuccessListener { p0 ->
-                            text_view.setText(p0.text)
-                            Log.d("StorageAction", "Out: " + p0.text)
-                        }
-                        .addOnFailureListener { TODO("Not yet implemented") }
                 }
             }
         }
