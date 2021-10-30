@@ -1,12 +1,10 @@
-package com.example.translator
+package com.example.translator.contracts
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.speech.RecognizerIntent
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
-import com.example.translator.state.LocaleState
 import java.util.*
 
 class RecognizeSpeech : ActivityResultContract<Locale, String?>() {
@@ -19,6 +17,10 @@ class RecognizeSpeech : ActivityResultContract<Locale, String?>() {
         intent.putExtra(
             RecognizerIntent.EXTRA_LANGUAGE,
             input.toString()
+        )
+        intent.putExtra(
+            RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS,
+            2000
         )
 
         return intent
