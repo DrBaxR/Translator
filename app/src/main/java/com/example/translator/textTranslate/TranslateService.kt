@@ -21,11 +21,11 @@ class TranslateService : AppCompatActivity() {
 
 
     private var fromLanguage = {
-        "From"; "Afrikaans"; "Albanian"; "Amharic"; "Arabic"; "Armenian"; "Azerbaijani"; "Basque"; "Belarusian"; "Bengali"; "Bosnian"; "Bulgarian"; "Catalan"; "Cebuano"; "Chinese"; "Chinese"; "Corsican"; "Croatian"; "Czech"; "Danish"; "Dutch"; "English"; "Esperanto"; "Estonian"; "Finnish"; "French"; "Frisian"; "Galician"; "Georgian"; "German"; "Greek"; "Gujarati"; "Haitian"; "Hausa"; "Hawaiian"; "Hebrew"; "Hindi"; "Hmong"; "Hungarian"; "Icelandic"; "Igbo"; "Indonesian"; "Irish"; "Italian"; "Japanese"; "Javanese"; "Kannada"; "Kazakh"; "Khmer"; "Kinyarwanda"; "Korean"; "Kurdish"; "Kyrgyz"; "Lao"; "Latvian"; "Lithuanian"; "Luxembourgish"; "Macedonian"; "Malagasy"; "Malay"; "Malayalam"; "Maltese"; "Maori"; "Marathi"; "Mongolian"; "Myanmar"; "Nepali"; "Norwegian"; "Nyanja"; "Odia"; "Pashto"; "Persian"; "Polish"; "Portuguese"; "Punjabi"; "Romanian"; "Russian"; "Samoan"; "Scots"; "Serbian"; "Sesotho"; "Shona"; "Sindhi"; "Sinhala"; "Slovak"; "Slovenian"; "Somali"; "Spanish"; "Sundanese"; "Swahili"; "Swedish"; "Tagalog"; "Tajik"; "Tamil"; "Tatar"; "Telugu"; "Thai"; "Turkish"; "Turkmen"; "Ukrainian"; "Urdu"; "Uyghur"; "Uzbek"; "Vietnamese"; "Welsh"; "Xhosa"; "Yiddish"; "Yoruba"; "Zulu";
+        "From"; "Afrikaans"; "Albanian"; "Arabic"; "Armenian"; "Belarusian"; "Bengali"; "Bulgarian"; "Catalan"; "Chinese"; "Chinese"; "Croatian"; "Czech"; "Danish"; "Dutch"; "English"; "Esperanto"; "Estonian"; "Finnish"; "French"; "Frisian"; "Galician"; "Georgian"; "German"; "Greek"; "Gujarati"; "Haitian"; "Hebrew"; "Hindi"; "Hungarian"; "Icelandic"; "Indonesian"; "Irish"; "Italian"; "Japanese"; "Kannada"; "Korean"; "Latvian"; "Lithuanian"; "Macedonian"; "Malay"; "Maltese"; "Marathi"; "Norwegian"; "Persian"; "Polish"; "Portuguese"; "Romanian"; "Russian"; "Slovak"; "Slovenian"; "Spanish"; "Swahili"; "Swedish"; "Tagalog"; "Tamil"; "Telugu"; "Thai"; "Turkish"; "Ukrainian"; "Urdu"; "Vietnamese"; "Welsh"
     }
 
     private var toLanguage = {
-        "To"; "Afrikaans"; "Albanian"; "Amharic"; "Arabic"; "Armenian"; "Azerbaijani"; "Basque"; "Belarusian"; "Bengali"; "Bosnian"; "Bulgarian"; "Catalan"; "Cebuano"; "Chinese"; "Chinese"; "Corsican"; "Croatian"; "Czech"; "Danish"; "Dutch"; "English"; "Esperanto"; "Estonian"; "Finnish"; "French"; "Frisian"; "Galician"; "Georgian"; "German"; "Greek"; "Gujarati"; "Haitian"; "Hausa"; "Hawaiian"; "Hebrew"; "Hindi"; "Hmong"; "Hungarian"; "Icelandic"; "Igbo"; "Indonesian"; "Irish"; "Italian"; "Japanese"; "Javanese"; "Kannada"; "Kazakh"; "Khmer"; "Kinyarwanda"; "Korean"; "Kurdish"; "Kyrgyz"; "Lao"; "Latvian"; "Lithuanian"; "Luxembourgish"; "Macedonian"; "Malagasy"; "Malay"; "Malayalam"; "Maltese"; "Maori"; "Marathi"; "Mongolian"; "Myanmar"; "Nepali"; "Norwegian"; "Nyanja"; "Odia"; "Pashto"; "Persian"; "Polish"; "Portuguese"; "Punjabi"; "Romanian"; "Russian"; "Samoan"; "Scots"; "Serbian"; "Sesotho"; "Shona"; "Sindhi"; "Sinhala"; "Slovak"; "Slovenian"; "Somali"; "Spanish"; "Sundanese"; "Swahili"; "Swedish"; "Tagalog"; "Tajik"; "Tamil"; "Tatar"; "Telugu"; "Thai"; "Turkish"; "Turkmen"; "Ukrainian"; "Urdu"; "Uyghur"; "Uzbek"; "Vietnamese"; "Welsh"; "Xhosa"; "Yiddish"; "Yoruba"; "Zulu";
+        "To"; "Afrikaans"; "Albanian"; "Arabic"; "Armenian"; "Belarusian"; "Bengali"; "Bulgarian"; "Catalan"; "Chinese"; "Chinese"; "Croatian"; "Czech"; "Danish"; "Dutch"; "English"; "Esperanto"; "Estonian"; "Finnish"; "French"; "Frisian"; "Galician"; "Georgian"; "German"; "Greek"; "Gujarati"; "Haitian"; "Hebrew"; "Hindi"; "Hungarian"; "Icelandic"; "Indonesian"; "Irish"; "Italian"; "Japanese"; "Kannada"; "Korean"; "Latvian"; "Lithuanian"; "Macedonian"; "Malay"; "Maltese"; "Marathi"; "Norwegian"; "Persian"; "Polish"; "Portuguese"; "Romanian"; "Russian"; "Slovak"; "Slovenian"; "Spanish"; "Swahili"; "Swedish"; "Tagalog"; "Tamil"; "Telugu"; "Thai"; "Turkish"; "Ukrainian"; "Urdu"; "Vietnamese"; "Welsh"
     }
 
 
@@ -46,6 +46,7 @@ class TranslateService : AppCompatActivity() {
             }
         }
 
+
     }
 
     private fun getLanguageCode(language: String): Int {
@@ -53,19 +54,13 @@ class TranslateService : AppCompatActivity() {
         when(language) {
             "Afrikaans" -> languageCode = FirebaseTranslateLanguage.AF
             "Albanian" -> languageCode = FirebaseTranslateLanguage.SQ
-            "Amharic" -> languageCode = FirebaseTranslateLanguage.
             "Arabic" -> languageCode = FirebaseTranslateLanguage.AR
             "Armenian" -> languageCode = FirebaseTranslateLanguage.HI
-            "Azerbaijani" -> languageCode = FirebaseTranslateLanguage.
-            "Basque" -> languageCode = FirebaseTranslateLanguage.
             "Belarusian" -> languageCode = FirebaseTranslateLanguage.BE
             "Bengali" -> languageCode = FirebaseTranslateLanguage.BN
-            "Bosnian" -> languageCode = FirebaseTranslateLanguage.
             "Bulgarian" -> languageCode = FirebaseTranslateLanguage.BG
             "Catalan" -> languageCode = FirebaseTranslateLanguage.CA
-            "Cebuano" -> languageCode = FirebaseTranslateLanguage.
             "Chinese" -> languageCode = FirebaseTranslateLanguage.ZH
-            "Corsican" -> languageCode = FirebaseTranslateLanguage.
             "Croatian" -> languageCode = FirebaseTranslateLanguage.HR
             "Czech" -> languageCode = FirebaseTranslateLanguage.CS
             "Danish" -> languageCode = FirebaseTranslateLanguage.DA
@@ -82,87 +77,42 @@ class TranslateService : AppCompatActivity() {
             "Greek" -> languageCode = FirebaseTranslateLanguage.EL
             "Gujarati" -> languageCode = FirebaseTranslateLanguage.GU
             "Haitian" -> languageCode = FirebaseTranslateLanguage.HT
-            "Hausa" -> languageCode = FirebaseTranslateLanguage.
-            "Hawaiian" -> languageCode = FirebaseTranslateLanguage.
             "Hebrew" -> languageCode = FirebaseTranslateLanguage.HE
             "Hindi" -> languageCode = FirebaseTranslateLanguage.HI
-            "Hmong" -> languageCode = FirebaseTranslateLanguage.
             "Hungarian" -> languageCode = FirebaseTranslateLanguage.HU
             "Icelandic" -> languageCode = FirebaseTranslateLanguage.IS
-            "Igbo" -> languageCode = FirebaseTranslateLanguage.
             "Indonesian" -> languageCode = FirebaseTranslateLanguage.ID
             "Irish" -> languageCode = FirebaseTranslateLanguage.GA
             "Italian" -> languageCode = FirebaseTranslateLanguage.IT
             "Japanese" -> languageCode = FirebaseTranslateLanguage.JA
-            "Javanese" -> languageCode = FirebaseTranslateLanguage.
             "Kannada" -> languageCode = FirebaseTranslateLanguage.KN
-            "Kazakh" -> languageCode = FirebaseTranslateLanguage.
-            "Khmer" -> languageCode = FirebaseTranslateLanguage.
-            "Kinyarwanda" -> languageCode = FirebaseTranslateLanguage.
             "Korean" -> languageCode = FirebaseTranslateLanguage.KO
-            "Kurdish" -> languageCode = FirebaseTranslateLanguage.
-            "Kyrgyz" -> languageCode = FirebaseTranslateLanguage.
-            "Lao" -> languageCode = FirebaseTranslateLanguage.
             "Latvian" -> languageCode = FirebaseTranslateLanguage.LV
             "Lithuanian" -> languageCode = FirebaseTranslateLanguage.LT
-            "Luxembourgish" -> languageCode = FirebaseTranslateLanguage.
             "Macedonian" -> languageCode = FirebaseTranslateLanguage.MK
-            "Malagasy" -> languageCode = FirebaseTranslateLanguage.
             "Malay" -> languageCode = FirebaseTranslateLanguage.MS
-            "Malayalam" -> languageCode = FirebaseTranslateLanguage.
             "Maltese" -> languageCode = FirebaseTranslateLanguage.MT
-            "Maori" -> languageCode = FirebaseTranslateLanguage.
             "Marathi" -> languageCode = FirebaseTranslateLanguage.MR
-            "Mongolian" -> languageCode = FirebaseTranslateLanguage.
-            "Myanmar" -> languageCode = FirebaseTranslateLanguage.
-            "Nepali" -> languageCode = FirebaseTranslateLanguage.
             "Norwegian" -> languageCode = FirebaseTranslateLanguage.NO
-            "Nyanja" -> languageCode = FirebaseTranslateLanguage.
-            "Odia" -> languageCode = FirebaseTranslateLanguage.
-            "Pashto" -> languageCode = FirebaseTranslateLanguage.
             "Persian" -> languageCode = FirebaseTranslateLanguage.FA
             "Polish" -> languageCode = FirebaseTranslateLanguage.PL
             "Portuguese" -> languageCode = FirebaseTranslateLanguage.PT
-            "Punjabi" -> languageCode = FirebaseTranslateLanguage.
             "Romanian" -> languageCode = FirebaseTranslateLanguage.RO
             "Russian" -> languageCode = FirebaseTranslateLanguage.RU
-            "Samoan" -> languageCode = FirebaseTranslateLanguage.
-            "Scots" -> languageCode = FirebaseTranslateLanguage.
-            "Serbian" -> languageCode = FirebaseTranslateLanguage.
-            "Sesotho" -> languageCode = FirebaseTranslateLanguage.
-            "Shona" -> languageCode = FirebaseTranslateLanguage.
-            "Sindhi" -> languageCode = FirebaseTranslateLanguage.
-            "Sinhala" -> languageCode = FirebaseTranslateLanguage.
             "Slovak" -> languageCode = FirebaseTranslateLanguage.SK
             "Slovenian" -> languageCode = FirebaseTranslateLanguage.SL
-            "Somali" -> languageCode = FirebaseTranslateLanguage.
             "Spanish" -> languageCode = FirebaseTranslateLanguage.ES
-            "Sundanese" -> languageCode = FirebaseTranslateLanguage.
             "Swahili" -> languageCode = FirebaseTranslateLanguage.SW
             "Swedish" -> languageCode = FirebaseTranslateLanguage.SV
             "Tagalog" -> languageCode = FirebaseTranslateLanguage.TL
-            "Tajik" -> languageCode = FirebaseTranslateLanguage.
             "Tamil" -> languageCode = FirebaseTranslateLanguage.TA
-            "Tatar" -> languageCode = FirebaseTranslateLanguage.
             "Telugu" -> languageCode = FirebaseTranslateLanguage.TE
-            "Thai" -> languageCode = FirebaseTranslateLanguage.EN
-            "Turkish" -> languageCode = FirebaseTranslateLanguage.EN
-            "Turkmen" -> languageCode = FirebaseTranslateLanguage.EN
-            "Ukrainian" -> languageCode = FirebaseTranslateLanguage.EN
-            "Urdu" -> languageCode = FirebaseTranslateLanguage.EN
-            "Uyghur" -> languageCode = FirebaseTranslateLanguage.EN
-            "Uzbek" -> languageCode = FirebaseTranslateLanguage.EN
-            "Vietnamese" -> languageCode = FirebaseTranslateLanguage.EN
-            "Welsh" -> languageCode = FirebaseTranslateLanguage.EN
-            "Xhosa" -> languageCode = FirebaseTranslateLanguage.EN
-            "Yiddish" -> languageCode = FirebaseTranslateLanguage.EN
-            "Yoruba" -> languageCode = FirebaseTranslateLanguage.EN
-            "Zulu" -> languageCode = FirebaseTranslateLanguage.EN
-
-
-
-
-
+            "Thai" -> languageCode = FirebaseTranslateLanguage.TH
+            "Turkish" -> languageCode = FirebaseTranslateLanguage.TR
+            "Ukrainian" -> languageCode = FirebaseTranslateLanguage.UK
+            "Urdu" -> languageCode = FirebaseTranslateLanguage.UR
+            "Vietnamese" -> languageCode = FirebaseTranslateLanguage.VI
+            "Welsh" -> languageCode = FirebaseTranslateLanguage.CY
         }
 
         return languageCode
