@@ -6,6 +6,8 @@ import android.util.Log
 import android.widget.Button
 import org.opencv.android.OpenCVLoader
 import android.content.Intent
+import com.example.translator.imageRecognition.Recognition
+import com.example.translator.imageRecognition.StorageRecognitionActivity
 
 
 class MainActivity : AppCompatActivity() {

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Recognition">
+    tools:context=".imageRecognition.Recognition">
 
     <org.opencv.android.JavaCameraView
         android:id="@+id/frame_Surface"

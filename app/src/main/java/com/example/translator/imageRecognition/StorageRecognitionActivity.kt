@@ -1,8 +1,6 @@
-package com.example.translator
+package com.example.translator.imageRecognition
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +12,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.translator.R
 import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
@@ -74,8 +73,8 @@ class StorageRecognitionActivity : AppCompatActivity() {
 
     private fun image_chooser() {
             val i = Intent()
-            i.setType("image/*")
-            i.setAction(Intent.ACTION_GET_CONTENT)
+            i.type = "image/*"
+            i.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(i, "Selected Picture"), Selected_Picture)
         }
 
@@ -87,7 +86,7 @@ class StorageRecognitionActivity : AppCompatActivity() {
             if(resultCode == Selected_Picture){
                 val selectedImageUri = data?.data
                 if(selectedImageUri != null) {
-                    Log.d("storage_Activity", "Output Uri: " + selectedImageUri)
+                    Log.d("storage_Activity", "Output Uri: $selectedImageUri")
 
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImageUri)
@@ -96,7 +95,7 @@ class StorageRecognitionActivity : AppCompatActivity() {
                     }
                     val image = InputImage.fromBitmap(bitmap, 0)
                     var result: Task<Text> = textRecognizer.process(image)
-                         text_view.setText(result.result.text)
+                    text_view.text = result.result.text
                     Log.d("StorageAction", "Out: " + result.result.text)
 
                 }
