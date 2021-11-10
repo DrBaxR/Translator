@@ -1,4 +1,4 @@
-package com.example.translator
+package com.example.translator.imageRecognition
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -20,6 +20,7 @@ import org.opencv.core.CvType
 import android.view.MotionEvent
 import android.widget.TextView
 import android.widget.Toast
+import com.example.translator.R
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.mlkit.vision.common.InputImage
@@ -124,7 +125,7 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
                         var result = textRecognizer.process(image)
                             .addOnSuccessListener(object : OnSuccessListener<Text>{
                                 override fun onSuccess(p0: Text) {
-                                    textView.setText(p0.text)
+                                    textView.text = p0.text
                                     Log.d("CameraActivity", "Out" + p0.text)
                                 }
                             })

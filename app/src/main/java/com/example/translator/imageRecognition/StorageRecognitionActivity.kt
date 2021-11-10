@@ -1,8 +1,6 @@
-package com.example.translator
+package com.example.translator.imageRecognition
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +12,10 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.translator.R
+import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.devanagari.DevanagariTextRecognizerOptions
@@ -23,7 +24,6 @@ import java.io.IOException
 class StorageRecognitionActivity : AppCompatActivity() {
 
     private lateinit var select_image: Button
-    private lateinit var test: Button
     private lateinit var recognizeImage_button: ImageView
     private lateinit var image_view: ImageView
     private lateinit var text_view: TextView
@@ -37,18 +37,9 @@ class StorageRecognitionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_storage_recognition)
-        Log.d("storage_Activity", "aAaaaaaaaaaaaaaaaaaaXXX")
-        test = findViewById(R.id.test123)
-
-
-
-        test.setOnClickListener{
-            Log.d("storage_Activity", "HEEEERE")
-        }
 
         select_image = findViewById(R.id.select_image)
         select_image.setOnClickListener {
-                Log.d("storage_Activity", "HEEEERE")
                 image_chooser()
         }
 
@@ -82,8 +73,8 @@ class StorageRecognitionActivity : AppCompatActivity() {
 
     private fun image_chooser() {
             val i = Intent()
-            i.setType("image/*")
-            i.setAction(Intent.ACTION_GET_CONTENT)
+            i.type = "image/*"
+            i.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(i, "Selected Picture"), Selected_Picture)
         }
 
@@ -91,11 +82,11 @@ class StorageRecognitionActivity : AppCompatActivity() {
 
     override fun onActivityResult(resultCode: Int, requestCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == RESULT_OK) {
-            if(requestCode == Selected_Picture){
+        if(requestCode == RESULT_OK) {
+            if(resultCode == Selected_Picture){
                 val selectedImageUri = data?.data
                 if(selectedImageUri != null) {
-                    Log.d("storage_Activity", "Output Uri: " + selectedImageUri)
+                    Log.d("storage_Activity", "Output Uri: $selectedImageUri")
 
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImageUri)
@@ -103,13 +94,10 @@ class StorageRecognitionActivity : AppCompatActivity() {
                         e.printStackTrace()
                     }
                     val image = InputImage.fromBitmap(bitmap, 0)
+                    var result: Task<Text> = textRecognizer.process(image)
+                    text_view.text = result.result.text
+                    Log.d("StorageAction", "Out: " + result.result.text)
 
-                    textRecognizer.process(image)
-                        .addOnSuccessListener { p0 ->
-                            text_view.setText(p0.text)
-                            Log.d("StorageAction", "Out: " + p0.text)
-                        }
-                        .addOnFailureListener { TODO("Not yet implemented") }
                 }
             }
         }

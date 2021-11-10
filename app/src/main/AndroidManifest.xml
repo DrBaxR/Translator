@@ -3,8 +3,9 @@
     package="com.example.translator">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -27,10 +28,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Translator">
         <activity
-            android:name=".StorageRecognitionActivity"
+            android:name=".textTranslate.TranslateService"
             android:exported="false" />
         <activity
-            android:name=".Recognition"
+            android:name=".imageRecognition.StorageRecognitionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".imageRecognition.Recognition"
             android:exported="false" />
         <activity android:name=".MainActivity">
             <intent-filter>
