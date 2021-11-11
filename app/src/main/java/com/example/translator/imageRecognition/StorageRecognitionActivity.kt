@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.translator.R
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
@@ -94,10 +95,14 @@ class StorageRecognitionActivity : AppCompatActivity() {
                         e.printStackTrace()
                     }
                     val image = InputImage.fromBitmap(bitmap, 0)
-                    var result: Task<Text> = textRecognizer.process(image)
-                    text_view.text = result.result.text
-                    Log.d("StorageAction", "Out: " + result.result.text)
-
+                    textRecognizer.process(image).addOnSuccessListener(
+                        object : OnSuccessListener<Text> {
+                            override fun onSuccess(p0: Text) {
+                                Log.d("StorageAction", "Out: " + p0.text)
+                                text_view.text = p0.text
+                            }
+                        }
+                    )
                 }
             }
         }
