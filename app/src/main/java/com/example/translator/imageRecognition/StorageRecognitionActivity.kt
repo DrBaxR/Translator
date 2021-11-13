@@ -13,10 +13,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.translator.R
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
+import com.example.translator.translate.TranslateText
 import com.google.mlkit.vision.common.InputImage
-import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.devanagari.DevanagariTextRecognizerOptions
@@ -79,8 +77,6 @@ class StorageRecognitionActivity : AppCompatActivity() {
             startActivityForResult(Intent.createChooser(i, "Selected Picture"), Selected_Picture)
         }
 
-
-
     override fun onActivityResult(resultCode: Int, requestCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == RESULT_OK) {
@@ -95,14 +91,15 @@ class StorageRecognitionActivity : AppCompatActivity() {
                         e.printStackTrace()
                     }
                     val image = InputImage.fromBitmap(bitmap, 0)
-                    textRecognizer.process(image).addOnSuccessListener(
-                        object : OnSuccessListener<Text> {
-                            override fun onSuccess(p0: Text) {
-                                Log.d("StorageAction", "Out: " + p0.text)
-                                text_view.text = p0.text
-                            }
-                        }
-                    )
+                    textRecognizer.process(image).addOnSuccessListener { p0 ->
+                        Log.d("StorageAction", "Out: " + p0.text)
+                        text_view.text = p0.text
+                        show_image_or_text = "text" //new Intend where we can send discovered text
+
+                        var intend = Intent(this, TranslateText::class.java)
+                        intend.putExtra("message", p0.text)
+                        startActivity(intend)
+                    }
                 }
             }
         }

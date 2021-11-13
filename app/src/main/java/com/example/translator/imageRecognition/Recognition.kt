@@ -1,6 +1,7 @@
 package com.example.translator.imageRecognition
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -21,6 +22,7 @@ import android.view.MotionEvent
 import android.widget.TextView
 import android.widget.Toast
 import com.example.translator.R
+import com.example.translator.translate.TranslateText
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.mlkit.vision.common.InputImage
@@ -93,7 +95,7 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
 
                 if(event.action == MotionEvent.ACTION_UP) {
                     if(camera_recognizeText == "camera") {
-                        take_picture_button.setColorFilter(Color.WHITE) //
+                        take_picture_button.setColorFilter(Color.WHITE)
                         var a = mRgba.t()
                         Core.flip(a, mRgba, 1)
                         a.release()
@@ -114,7 +116,7 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
         translate_button.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent): Boolean {
                 if(event.action == MotionEvent.ACTION_DOWN) {
-                    translate_button.setColorFilter(Color.WHITE) //
+                    translate_button.setColorFilter(Color.WHITE)
                     return true
                 }
                 if(event.action == MotionEvent.ACTION_UP) {
@@ -127,6 +129,11 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
                                 override fun onSuccess(p0: Text) {
                                     textView.text = p0.text
                                     Log.d("CameraActivity", "Out" + p0.text)
+
+                                    var intend = Intent(this@Recognition, TranslateText::class.java)
+                                    intend.putExtra("message", p0.text)
+                                    startActivity(intend)
+
                                 }
                             })
                             .addOnFailureListener(object: OnFailureListener {
@@ -148,7 +155,7 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
         show_image_button.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent): Boolean {
                 if(event.action == MotionEvent.ACTION_DOWN) {
-                    show_image_button.setColorFilter(Color.WHITE) //
+                    show_image_button.setColorFilter(Color.WHITE)
                     return true
                 }
                 if(event.action == MotionEvent.ACTION_UP) {
