@@ -15,11 +15,11 @@ import com.google.cloud.translate.Translate
 import java.io.IOException
 
 
-class GoogleApiTranslator(private val context: Context) {
+class GoogleApiTranslator() {
 
     private lateinit var  translate: Translate
 
-    fun getTranslateService() {
+    fun getTranslateService(context: Context) {
         val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
         try {

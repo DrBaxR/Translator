@@ -11,11 +11,11 @@ import com.example.translator.services.GoogleApiTranslator
 class TranslateText : AppCompatActivity() {
 
     private lateinit var textView: TextView
-//    private var googleApi = GoogleApiTranslator(context = applicationContext)
+    private var googleApi = GoogleApiTranslator()
     private lateinit var spinner: Spinner
     private lateinit var button: Button
 
-    private var arrayOptions = arrayOf("English", "Deutsch")
+    private var arrayOptions = arrayOf("Language", "Afrikaans", "Albanian", "Arabic", "Armenian", "Belarusian", "Bengali", "Bulgarian", "Catalan", "Chinese", "Chinese", "Croatian", "Czech", "Danish", "Dutch", "English", "Esperanto", "Estonian", "Finnish", "French", "Frisian", "Galician", "Georgian", "German", "Greek", "Gujarati", "Haitian", "Hebrew", "Hindi", "Hungarian", "Icelandic", "Indonesian", "Irish", "Italian", "Japanese", "Kannada", "Korean", "Latvian", "Lithuanian", "Macedonian", "Malay", "Maltese", "Marathi", "Norwegian", "Persian", "Polish", "Portuguese", "Romanian", "Russian", "Slovak", "Slovenian", "Spanish", "Swahili", "Swedish", "Tagalog", "Tamil", "Telugu", "Thai", "Turkish", "Ukrainian", "Urdu", "Vietnamese", "Welsh")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +33,9 @@ class TranslateText : AppCompatActivity() {
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                spinner[p2]
+                googleApi.getTranslateService(context = baseContext)
+                message = googleApi.translate(message!!, "de")
+                textView.text = message
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
