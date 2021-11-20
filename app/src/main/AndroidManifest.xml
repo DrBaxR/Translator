@@ -37,7 +37,8 @@
         <activity
             android:name=".imageRecognition.Recognition"
             android:exported="false" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true" />
           <activity
             android:name=".SignUpActivity"
             android:exported="true" />
