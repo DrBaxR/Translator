@@ -1,5 +1,6 @@
 package com.example.translator
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
@@ -7,6 +8,7 @@ import com.example.translator.contracts.RecognizeSpeech
 import com.example.translator.locale.LocaleAdapter
 import com.example.translator.locale.LocaleSpinnerSelectionListener
 import com.example.translator.state.LocaleState
+import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 import android.util.Log
 import android.widget.Button
@@ -24,10 +26,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvResult: TextView
     private lateinit var button: Button
     private var locales: List<Locale> = getUniqueLocales()
+    private lateinit var logoutButton: Button
+    private lateinit var firebaseAuth: FirebaseAuth
 
     private val getSpeechLauncher = registerForActivityResult(RecognizeSpeech()) { result ->
         tvResult.text = result
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +53,14 @@ class MainActivity : AppCompatActivity() {
         button = findViewById(R.id.btnSpeak)
         tvResult = findViewById(R.id.tvResult)
         button.setOnClickListener { getSpeechLauncher.launch(LocaleState.selectedLocale) }
+
+        firebaseAuth = FirebaseAuth.getInstance()
+        logoutButton = findViewById(R.id.logoutBtn)
+        logoutButton.setOnClickListener {
+            firebaseAuth.signOut()
+            logoutAction()
+        }
+    }
 
 
         cameraButton = findViewById(R.id.camera_button)
@@ -82,5 +95,10 @@ class MainActivity : AppCompatActivity() {
         uniqueLanguageLocales.sortWith(compareBy({ it.displayLanguage }, { it.displayLanguage }))
 
         return uniqueLanguageLocales
+    }
+
+    private fun logoutAction() {
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 }

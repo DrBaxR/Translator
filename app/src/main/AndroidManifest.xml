@@ -21,7 +21,7 @@
         android:name="android.hardware.camera.front.autofocus"
         android:required="false" />
 
-    <application
+  <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -38,12 +38,26 @@
             android:name=".imageRecognition.Recognition"
             android:exported="false" />
         <activity android:name=".MainActivity">
+          <activity
+            android:name=".SignUpActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+<!--        <activity android:name=".MainActivity">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
     </application>
 
 </manifest>
