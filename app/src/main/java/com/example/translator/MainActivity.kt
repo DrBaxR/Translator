@@ -8,14 +8,15 @@ import com.example.translator.contracts.RecognizeSpeech
 import com.example.translator.locale.LocaleAdapter
 import com.example.translator.locale.LocaleSpinnerSelectionListener
 import com.example.translator.state.LocaleState
-import com.google.firebase.auth.FirebaseAuth
+
 import java.util.*
 import android.util.Log
 import android.widget.Button
 import org.opencv.android.OpenCVLoader
-import android.content.Intent
 import com.example.translator.imageRecognition.Recognition
 import com.example.translator.imageRecognition.StorageRecognitionActivity
+import com.example.translator.translate.TranslateText
+import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +32,9 @@ class MainActivity : AppCompatActivity() {
 
     private val getSpeechLauncher = registerForActivityResult(RecognizeSpeech()) { result ->
         tvResult.text = result
+        val intend = Intent(this, TranslateText::class.java)
+        intend.putExtra("message", result)
+        startActivity(intend)
     }
 
 
@@ -60,8 +64,6 @@ class MainActivity : AppCompatActivity() {
             firebaseAuth.signOut()
             logoutAction()
         }
-    }
-
 
         cameraButton = findViewById(R.id.camera_button)
         cameraButton.setOnClickListener {
