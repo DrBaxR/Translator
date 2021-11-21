@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/textView"
-        android:background="@color/white"/>
+        android:background="@color/white_500"/>
 
     <LinearLayout
         android:layout_width="match_parent"
