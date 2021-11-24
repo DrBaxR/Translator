@@ -33,6 +33,7 @@ open class LocaleSpinnerSelectionListener(private val localeToSet: String) :
             "s1" -> LocaleState.selectedSpeechLocale1 = locales[position]
             "s2" -> LocaleState.selectedSpeechLocale2 = locales[position]
             "t1" -> LocaleState.selectedTextLocale1 = locales[position]
+            "i1" -> LocaleState.selectedImageLocale1 = locales[position]
         }
 
     }
