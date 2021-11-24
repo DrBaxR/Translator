@@ -9,6 +9,7 @@ class LocaleState {
 
         var selectedSpeechLocale1: Locale = Locale.getDefault()
         var selectedSpeechLocale2: Locale = Locale.getDefault()
+        var selectedTextLocale1: Locale = Locale.getDefault()
 
     }
 }

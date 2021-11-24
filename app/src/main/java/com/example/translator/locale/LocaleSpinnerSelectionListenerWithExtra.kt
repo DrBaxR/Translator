@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.AdapterView
 import java.util.*
 
-class LocaleSpinnerSelectionListenerWithButton(
+class LocaleSpinnerSelectionListenerWithExtra(
     localeToSet: String,
     val extraBehavior: (locale: Locale) -> Unit
 ) : LocaleSpinnerSelectionListener(localeToSet) {
