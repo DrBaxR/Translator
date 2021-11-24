@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.*
 import com.example.translator.contracts.RecognizeSpeech
 import com.example.translator.locale.LocaleAdapter
-import com.example.translator.locale.LocaleSpinnerSelectionListener
 import com.example.translator.state.LocaleState
 
 import java.util.*
@@ -50,13 +49,13 @@ class MainActivity : AppCompatActivity() {
 
         // spinner
         val spinner: Spinner = findViewById(R.id.spinner)
-        spinner.onItemSelectedListener = LocaleSpinnerSelectionListener(locales)
+//        spinner.onItemSelectedListener = LocaleSpinnerSelectionListener(locales)
         spinner.adapter = LocaleAdapter(this, locales)
 
         // other
         button = findViewById(R.id.btnSpeak)
         tvResult = findViewById(R.id.tvResult)
-        button.setOnClickListener { getSpeechLauncher.launch(LocaleState.selectedLocale) }
+        button.setOnClickListener { getSpeechLauncher.launch(LocaleState.selectedSpeechLocale1) }
 
         firebaseAuth = FirebaseAuth.getInstance()
         logoutButton = findViewById(R.id.logoutBtn)

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/page_voice">
+    <fragment
+        android:id="@+id/page_voice"
+        android:name="com.example.translator.fragment.SpeechFragment"
+        android:label="fragment_speech"
+        tools:layout="@layout/fragment_speech" >
+        <action
+            android:id="@+id/action_page_voice_to_page_image"
+            app:destination="@id/page_image" />
+    </fragment>
+    <fragment
+        android:id="@+id/page_image"
+        android:name="com.example.translator.fragment.ImageFragment"
+        android:label="fragment_image"
+        tools:layout="@layout/fragment_image" >
+        <action
+            android:id="@+id/action_page_image_to_page_text"
+            app:destination="@id/page_text" />
+    </fragment>
+    <fragment
+        android:id="@+id/page_text"
+        android:name="com.example.translator.fragment.TextFragment"
+        android:label="fragment_text"
+        tools:layout="@layout/fragment_text" />
+</navigation>
