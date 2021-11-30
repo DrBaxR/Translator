@@ -78,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
                 val email = firebaseUser!!.email
                 Toast.makeText(this, "LoggedIn as $email", Toast.LENGTH_SHORT).show()
 
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, TranslateActivity::class.java))
                 finish()
             }
             .addOnFailureListener { e->
@@ -90,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
     private fun checkUser(){
         val firebaseUser = firebaseAuth.currentUser
         if(firebaseUser != null){
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, TranslateActivity::class.java))
             finish()
         }
     }
