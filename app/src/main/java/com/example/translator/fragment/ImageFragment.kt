@@ -15,7 +15,10 @@ import com.example.translator.imageRecognition.StorageRecognitionActivity
 import com.example.translator.locale.LocaleAdapter
 import com.example.translator.locale.LocaleSpinnerSelectionListener
 import com.example.translator.locale.LocaleSpinnerSelectionListenerWithExtra
+import com.example.translator.services.PremiumService
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class ImageFragment : Fragment() {
     override fun onCreateView(
@@ -23,6 +26,8 @@ class ImageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_image, container, false)
+        val databaseReference = FirebaseDatabase.getInstance().reference
+        val uid = FirebaseAuth.getInstance().uid
 
         if (view != null) {
             val textField = view.findViewById<TextInputLayout>(R.id.iTextField)
@@ -35,22 +40,26 @@ class ImageFragment : Fragment() {
 
             val cameraButton = view.findViewById<Button>(R.id.iCameraButton)
             cameraButton.setOnClickListener {
-                startActivity(
-                    Intent(
-                        context,
-                        Recognition::class.java
-                    ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                )
+                PremiumService.incrementCounter(databaseReference, uid!!, view.context) {
+                    startActivity(
+                        Intent(
+                            context,
+                            Recognition::class.java
+                        ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    )
+                }
             }
 
             val storage_ImageP_button = view.findViewById<Button>(R.id.iStorageButton)
             storage_ImageP_button.setOnClickListener {
-                startActivity(
-                    Intent(
-                        context,
-                        StorageRecognitionActivity::class.java
-                    ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                )
+                PremiumService.incrementCounter(databaseReference, uid!!, view.context) {
+                    startActivity(
+                        Intent(
+                            context,
+                            StorageRecognitionActivity::class.java
+                        ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    )
+                }
             }
         }
 

@@ -68,13 +68,12 @@
         />
 
     <TextView
+        android:id="@+id/noAccountTv"
+        style="@style/TextAppearance.MaterialComponents.Caption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/noAccountTv"
-        android:text="@string/no_account"
         android:layout_alignParentBottom="true"
-        android:padding="5dp"
         android:layout_centerHorizontal="true"
-        style="@style/TextAppearance.MaterialComponents.Caption"
-        />
+        android:padding="5dp"
+        android:text="@string/no_account" />
 </RelativeLayout>

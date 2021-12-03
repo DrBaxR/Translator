@@ -12,14 +12,23 @@ import com.example.translator.R
 import com.example.translator.locale.LocaleAdapter
 import com.example.translator.locale.LocaleSpinnerSelectionListener
 import com.example.translator.locale.LocaleSpinnerSelectionListenerWithExtra
+import com.example.translator.services.PremiumService
 import com.example.translator.state.LocaleState
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.*
 
 class TextFragment : Fragment() {
+    private lateinit var databaseReference: DatabaseReference
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        databaseReference = FirebaseDatabase.getInstance().reference
+        val uid = FirebaseAuth.getInstance().uid
+
         val view = inflater.inflate(R.layout.fragment_text, container, false)
 
         if (view != null) {
@@ -32,11 +41,14 @@ class TextFragment : Fragment() {
             spinner.adapter = LocaleAdapter(view.context, LocaleSpinnerSelectionListener.locales)
 
             val button = view.findViewById<Button>(R.id.tButton)
+
             button.setOnClickListener {
-                translateText(
-                    tTextField1.editText?.text?.toString(),
-                    tTextField2
-                )
+                PremiumService.incrementCounter(databaseReference, uid!!, view.context) {
+                    translateText(
+                        tTextField1.editText?.text?.toString(),
+                        tTextField2
+                    )
+                }
             }
         }
 
