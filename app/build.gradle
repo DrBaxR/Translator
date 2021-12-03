@@ -59,7 +59,9 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
         exclude group: 'org.json', module: 'json'
     }
+    implementation platform('com.google.firebase:firebase-bom:29.0.0')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-database:19.2.1'
     annotationProcessor 'com.google.cloud:google-cloud-translate:1.12.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'com.google.mlkit:text-recognition-devanagari:16.0.0-beta1'
