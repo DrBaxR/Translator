@@ -8,9 +8,12 @@ import android.view.WindowManager
 import android.widget.Button
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.translator.services.PremiumService
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import java.time.LocalDate
 
 class TranslateActivity : AppCompatActivity() {
     lateinit var bottomNavigationView: BottomNavigationView
@@ -30,6 +33,13 @@ class TranslateActivity : AppCompatActivity() {
         }
 
         setUpNavigation()
+
+        val databaseReference = FirebaseDatabase.getInstance().reference
+        val uid = FirebaseAuth.getInstance().uid
+        val current = LocalDate.now()
+        PremiumService.initializeUserData(databaseReference, uid, current)
+        PremiumService.readCounterFromDatabase(databaseReference, uid)
+        PremiumService.readPremiumFromDatabase(databaseReference, uid)
     }
 
     private fun setUpNavigation() {

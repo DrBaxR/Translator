@@ -12,8 +12,11 @@ import com.example.translator.contracts.RecognizeSpeech
 import com.example.translator.locale.LocaleAdapter
 import com.example.translator.locale.LocaleSpinnerSelectionListener
 import com.example.translator.locale.LocaleSpinnerSelectionListenerWithExtra
+import com.example.translator.services.PremiumService
 import com.example.translator.state.LocaleState
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class SpeechFragment : Fragment() {
     private var sTextField1: TextInputLayout? = null
@@ -44,6 +47,8 @@ class SpeechFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_speech, container, false)
+        val databaseReference = FirebaseDatabase.getInstance().reference
+        val uid = FirebaseAuth.getInstance().uid
 
         sTextField1 = view?.findViewById(R.id.sTextField1)
         sTextField1?.editText?.isFocusable = false
@@ -51,9 +56,17 @@ class SpeechFragment : Fragment() {
         sTextField2?.editText?.isFocusable = false
 
         val button1 = view?.findViewById<Button>(R.id.bSpeak1)
-        button1?.setOnClickListener { getSpeechLauncher1.launch(LocaleState.selectedSpeechLocale1) }
+        button1?.setOnClickListener {
+            PremiumService.incrementCounter(databaseReference, uid!!, view.context) {
+                getSpeechLauncher1.launch(LocaleState.selectedSpeechLocale1)
+            }
+        }
         val button2 = view?.findViewById<Button>(R.id.bSpeak2)
-        button2?.setOnClickListener { getSpeechLauncher2.launch(LocaleState.selectedSpeechLocale2) }
+        button2?.setOnClickListener {
+            PremiumService.incrementCounter(databaseReference, uid!!, view.context) {
+                getSpeechLauncher2.launch(LocaleState.selectedSpeechLocale2)
+            }
+        }
 
         val spinner1 = view?.findViewById<Spinner>(R.id.slSpinner1)
         spinner1?.onItemSelectedListener = LocaleSpinnerSelectionListenerWithExtra("s1") {
