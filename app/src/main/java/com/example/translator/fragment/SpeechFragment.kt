@@ -13,7 +13,7 @@ import com.example.translator.locale.LocaleAdapter
 import com.example.translator.locale.LocaleSpinnerSelectionListener
 import com.example.translator.locale.LocaleSpinnerSelectionListenerWithExtra
 import com.example.translator.services.PremiumService
-import com.example.translator.state.LocaleState
+import com.example.translator.state.AppState
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -25,9 +25,9 @@ class SpeechFragment : Fragment() {
     private val getSpeechLauncher1 = registerForActivityResult(RecognizeSpeech()) { result ->
         sTextField1?.editText?.text = SpannableStringBuilder(result ?: "")
         if (context != null && result != null) {
-            LocaleState.googleApi.getTranslateService(context!!)
+            AppState.googleApi.getTranslateService(context!!)
             sTextField2?.editText?.text = SpannableStringBuilder(
-                LocaleState.googleApi.translate(result, LocaleState.selectedSpeechLocale2.language)
+                AppState.googleApi.translate(result, AppState.selectedSpeechLocale2.language)
             )
         }
     }
@@ -35,9 +35,9 @@ class SpeechFragment : Fragment() {
     private val getSpeechLauncher2 = registerForActivityResult(RecognizeSpeech()) { result ->
         sTextField2?.editText?.text = SpannableStringBuilder(result ?: "")
         if (context != null && result != null) {
-            LocaleState.googleApi.getTranslateService(context!!)
+            AppState.googleApi.getTranslateService(context!!)
             sTextField1?.editText?.text = SpannableStringBuilder(
-                LocaleState.googleApi.translate(result, LocaleState.selectedSpeechLocale1.language)
+                AppState.googleApi.translate(result, AppState.selectedSpeechLocale1.language)
             )
         }
     }
@@ -58,13 +58,13 @@ class SpeechFragment : Fragment() {
         val button1 = view?.findViewById<Button>(R.id.bSpeak1)
         button1?.setOnClickListener {
             PremiumService.incrementCounter(databaseReference, uid!!, view.context) {
-                getSpeechLauncher1.launch(LocaleState.selectedSpeechLocale1)
+                getSpeechLauncher1.launch(AppState.selectedSpeechLocale1)
             }
         }
         val button2 = view?.findViewById<Button>(R.id.bSpeak2)
         button2?.setOnClickListener {
             PremiumService.incrementCounter(databaseReference, uid!!, view.context) {
-                getSpeechLauncher2.launch(LocaleState.selectedSpeechLocale2)
+                getSpeechLauncher2.launch(AppState.selectedSpeechLocale2)
             }
         }
 

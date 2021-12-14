@@ -2,7 +2,7 @@ package com.example.translator.locale
 
 import android.view.View
 import android.widget.AdapterView
-import com.example.translator.state.LocaleState
+import com.example.translator.state.AppState
 import java.util.*
 
 open class LocaleSpinnerSelectionListener(private val localeToSet: String) :
@@ -30,10 +30,10 @@ open class LocaleSpinnerSelectionListener(private val localeToSet: String) :
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (localeToSet) {
-            "s1" -> LocaleState.selectedSpeechLocale1 = locales[position]
-            "s2" -> LocaleState.selectedSpeechLocale2 = locales[position]
-            "t1" -> LocaleState.selectedTextLocale1 = locales[position]
-            "i1" -> LocaleState.selectedImageLocale1 = locales[position]
+            "s1" -> AppState.selectedSpeechLocale1 = locales[position]
+            "s2" -> AppState.selectedSpeechLocale2 = locales[position]
+            "t1" -> AppState.selectedTextLocale1 = locales[position]
+            "i1" -> AppState.selectedImageLocale1 = locales[position]
         }
 
     }

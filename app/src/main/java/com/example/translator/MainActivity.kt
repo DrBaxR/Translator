@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.widget.*
 import com.example.translator.contracts.RecognizeSpeech
 import com.example.translator.locale.LocaleAdapter
-import com.example.translator.state.LocaleState
+import com.example.translator.state.AppState
 
 import java.util.*
 import android.util.Log
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         // other
         button = findViewById(R.id.btnSpeak)
         tvResult = findViewById(R.id.tvResult)
-        button.setOnClickListener { getSpeechLauncher.launch(LocaleState.selectedSpeechLocale1) }
+        button.setOnClickListener { getSpeechLauncher.launch(AppState.selectedSpeechLocale1) }
 
         firebaseAuth = FirebaseAuth.getInstance()
         logoutButton = findViewById(R.id.logoutBtn)
