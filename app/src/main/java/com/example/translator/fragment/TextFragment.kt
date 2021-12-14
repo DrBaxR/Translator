@@ -6,18 +6,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Spinner
 import com.example.translator.R
-import com.example.translator.locale.LocaleAdapter
-import com.example.translator.locale.LocaleSpinnerSelectionListener
-import com.example.translator.locale.LocaleSpinnerSelectionListenerWithExtra
+import com.example.translator.locale.*
 import com.example.translator.services.PremiumService
 import com.example.translator.state.AppState
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.*
+import java.util.*
 
 class TextFragment : Fragment() {
     private lateinit var databaseReference: DatabaseReference
@@ -36,9 +36,17 @@ class TextFragment : Fragment() {
             tTextField2.editText?.isFocusable = false
             val tTextField1 = view.findViewById<TextInputLayout>(R.id.tTextField1)
 
-            val spinner = view.findViewById<Spinner>(R.id.tSpinner)
-            spinner.onItemSelectedListener = LocaleSpinnerSelectionListenerWithExtra("t1") { }
-            spinner.adapter = LocaleAdapter(view.context, LocaleSpinnerSelectionListener.locales)
+            val autocomplete = view.findViewById<AutoCompleteTextView>(R.id.tSpinner)
+            val adapter = AutocompleteLocaleAdapter(view.context, AutocompleteLocale.locales)
+            autocomplete.setAdapter(adapter)
+            autocomplete.setOnItemClickListener { _, _, pos, _ ->
+                val selectedItem = adapter.getItem(pos)
+                if (selectedItem != null) {
+                    AppState.selectedTextLocale1 = Locale(selectedItem.locale)
+                }
+            }
+
+            autocomplete.text = SpannableStringBuilder(AppState.selectedTextLocale1.displayLanguage)
 
             val button = view.findViewById<Button>(R.id.tButton)
 
