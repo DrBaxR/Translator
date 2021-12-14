@@ -26,13 +26,20 @@
             android:padding="5dp">
 
 
-            <Spinner
+<!--            <Spinner-->
+<!--                android:id="@+id/slSpinner1"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="0"-->
+<!--                android:minHeight="48dp"-->
+<!--                tools:ignore="SpeakableTextPresentCheck" />-->
+
+            <AutoCompleteTextView
                 android:id="@+id/slSpinner1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:minHeight="48dp"
-                tools:ignore="SpeakableTextPresentCheck" />
+                android:minHeight="48dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/sTextField1"
@@ -66,13 +73,20 @@
             android:padding="5dp">
 
 
-            <Spinner
+<!--            <Spinner-->
+<!--                android:id="@+id/slSpinner2"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="0"-->
+<!--                android:minHeight="48dp"-->
+<!--                tools:ignore="SpeakableTextPresentCheck" />-->
+
+            <AutoCompleteTextView
                 android:id="@+id/slSpinner2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:minHeight="48dp"
-                tools:ignore="SpeakableTextPresentCheck" />
+                android:minHeight="48dp"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/sTextField2"
