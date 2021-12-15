@@ -2,6 +2,7 @@ package com.example.translator.fragment
 
 import android.os.Bundle
 import android.text.SpannableStringBuilder
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import java.util.*
 class SpeechFragment : Fragment() {
     private var sTextField1: TextInputLayout? = null
     private var sTextField2: TextInputLayout? = null
+    private var translateLTR: Boolean = true
 
     private val getSpeechLauncher1 = registerForActivityResult(RecognizeSpeech()) { result ->
         sTextField1?.editText?.text = SpannableStringBuilder(result ?: "")
@@ -54,16 +56,24 @@ class SpeechFragment : Fragment() {
         sTextField2 = view?.findViewById(R.id.sTextField2)
         sTextField2?.editText?.isFocusable = false
 
-        val button1 = view?.findViewById<Button>(R.id.bSpeak1)
-        button1?.setOnClickListener {
-            PremiumService.incrementCounter(databaseReference, uid!!, view.context) {
-                getSpeechLauncher1.launch(AppState.selectedSpeechLocale1)
-            }
+        val swapButton = view?.findViewById<ImageButton>(R.id.swapButton)
+        swapButton?.setOnClickListener {
+            translateLTR = !translateLTR
+            if (translateLTR)
+                swapButton.setImageResource(R.drawable.ic_arrow_forward)
+            else
+                swapButton.setImageResource(R.drawable.ic_arrow_back)
         }
-        val button2 = view?.findViewById<Button>(R.id.bSpeak2)
-        button2?.setOnClickListener {
+
+        val speakButton = view?.findViewById<Button>(R.id.speakButton)
+        speakButton?.setOnClickListener {
             PremiumService.incrementCounter(databaseReference, uid!!, view.context) {
-                getSpeechLauncher2.launch(AppState.selectedSpeechLocale2)
+                if (translateLTR) {
+                    getSpeechLauncher1.launch(AppState.selectedSpeechLocale1)
+                }
+                else {
+                    getSpeechLauncher2.launch(AppState.selectedSpeechLocale2)
+                }
             }
         }
 
@@ -74,7 +84,6 @@ class SpeechFragment : Fragment() {
             val selectedItem = adapter1.getItem(pos)
             if (selectedItem != null) {
                 AppState.selectedSpeechLocale1 = Locale(selectedItem.locale)
-                button1?.text = selectedItem.language
                 resetTextViews(sTextField1, sTextField2)
             }
         }
@@ -86,7 +95,6 @@ class SpeechFragment : Fragment() {
             val selectedItem = adapter2.getItem(pos)
             if (selectedItem != null) {
                 AppState.selectedSpeechLocale2 = Locale(selectedItem.locale)
-                button2?.text = selectedItem.language
                 resetTextViews(sTextField1, sTextField2)
             }
         }
