@@ -6,18 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.Spinner
 import com.example.translator.R
-import com.example.translator.locale.LocaleAdapter
-import com.example.translator.locale.LocaleSpinnerSelectionListener
-import com.example.translator.locale.LocaleSpinnerSelectionListenerWithExtra
+import com.example.translator.locale.*
 import com.example.translator.services.PremiumService
-import com.example.translator.state.LocaleState
+import com.example.translator.state.AppState
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.*
+import java.util.*
 
 class TextFragment : Fragment() {
     private lateinit var databaseReference: DatabaseReference
@@ -36,9 +35,17 @@ class TextFragment : Fragment() {
             tTextField2.editText?.isFocusable = false
             val tTextField1 = view.findViewById<TextInputLayout>(R.id.tTextField1)
 
-            val spinner = view.findViewById<Spinner>(R.id.tSpinner)
-            spinner.onItemSelectedListener = LocaleSpinnerSelectionListenerWithExtra("t1") { }
-            spinner.adapter = LocaleAdapter(view.context, LocaleSpinnerSelectionListener.locales)
+            val tAutocomplete = view.findViewById<AutoCompleteTextView>(R.id.tSpinner)
+            val adapter = AutocompleteLocaleAdapter(view.context, AutocompleteLocale.locales.toMutableList())
+            tAutocomplete.setAdapter(adapter)
+            tAutocomplete.setOnItemClickListener { _, _, pos, _ ->
+                val selectedItem = adapter.getItem(pos)
+                if (selectedItem != null) {
+                    AppState.selectedTextLocale1 = Locale(selectedItem.locale)
+                }
+            }
+
+            tAutocomplete.text = SpannableStringBuilder(AppState.selectedTextLocale1.displayLanguage)
 
             val button = view.findViewById<Button>(R.id.tButton)
 
@@ -57,9 +64,9 @@ class TextFragment : Fragment() {
 
     private fun translateText(text: String?, textField: TextInputLayout) {
         if (text != null) {
-            LocaleState.googleApi.getTranslateService(context!!)
+            AppState.googleApi.getTranslateService(context!!)
             textField.editText?.text = SpannableStringBuilder(
-                LocaleState.googleApi.translate(text, LocaleState.selectedTextLocale1.language)
+                AppState.googleApi.translate(text, AppState.selectedTextLocale1.language)
             )
         }
     }

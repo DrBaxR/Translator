@@ -1,9 +1,10 @@
 package com.example.translator.state
 
+import com.example.translator.locale.AutocompleteLocale
 import com.example.translator.services.GoogleApiTranslator
 import java.util.*
 
-class LocaleState {
+class AppState {
     companion object {
         val googleApi = GoogleApiTranslator()
 

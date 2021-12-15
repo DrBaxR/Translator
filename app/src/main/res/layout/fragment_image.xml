@@ -31,12 +31,17 @@
             android:layout_height="wrap_content"
             android:text="Image From Storage" />
 
-        <Spinner
+<!--        <Spinner-->
+<!--            android:id="@+id/iSpinner"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:minHeight="48dp"-->
+<!--            tools:ignore="SpeakableTextPresentCheck" />-->
+
+        <AutoCompleteTextView
             android:id="@+id/iSpinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:layout_height="wrap_content" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/iTextField"

@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.translator.R
+import com.example.translator.state.AppState
 import com.example.translator.translate.TranslateText
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
@@ -96,9 +97,15 @@ class StorageRecognitionActivity : AppCompatActivity() {
                         text_view.text = p0.text
                         show_image_or_text = "text" //new Intend where we can send discovered text
 
-                        var intend = Intent(this, TranslateText::class.java)
-                        intend.putExtra("message", p0.text)
-                        startActivity(intend)
+//                        var intend = Intent(this, TranslateText::class.java)
+//                        intend.putExtra("message", p0.text)
+//                        startActivity(intend)
+//                        AppState.imageText = p0.text
+                        val message = p0.text
+                        val intent = Intent()
+                        intent.putExtra("message", message)
+                        setResult(2, intent)
+                        finish()
                     }
                 }
             }

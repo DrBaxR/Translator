@@ -23,6 +23,7 @@ import android.view.MotionEvent
 import android.widget.TextView
 import android.widget.Toast
 import com.example.translator.R
+import com.example.translator.state.AppState
 import com.example.translator.translate.TranslateText
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -132,10 +133,15 @@ class Recognition : AppCompatActivity(),  CameraBridgeViewBase.CvCameraViewListe
                                     textView.text = p0.text
                                     Log.d("CameraActivity", "Out" + p0.text)
 
-                                    var intend = Intent(this@Recognition, TranslateText::class.java)
-                                    intend.putExtra("message", p0.text)
-                                    startActivity(intend)
-
+//                                    var intend = Intent(this@Recognition, TranslateText::class.java)
+//                                    intend.putExtra("message", p0.text)
+//                                    startActivity(intend)
+//                                    AppState.imageText = p0.text
+                                    val message = p0.text
+                                    val intent = Intent()
+                                    intent.putExtra("message", message)
+                                    setResult(2, intent)
+                                    finish()
                                 }
                             })
                             .addOnFailureListener(object: OnFailureListener {
