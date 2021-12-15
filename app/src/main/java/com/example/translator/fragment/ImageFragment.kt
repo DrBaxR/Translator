@@ -36,17 +36,17 @@ class ImageFragment : Fragment() {
             textField.editText?.isFocusable = false
             textField.editText?.text = SpannableStringBuilder("Translated text will be here")
 
-            val autocomplete = view.findViewById<AutoCompleteTextView>(R.id.iSpinner)
-            val adapter = AutocompleteLocaleAdapter(view.context, AutocompleteLocale.locales)
-            autocomplete.setAdapter(adapter)
-            autocomplete.setOnItemClickListener { _, _, pos, _ ->
+            val iAutocomplete = view.findViewById<AutoCompleteTextView>(R.id.iSpinner)
+            val adapter = AutocompleteLocaleAdapter(view.context, AutocompleteLocale.locales.toMutableList())
+            iAutocomplete.setAdapter(adapter)
+            iAutocomplete.setOnItemClickListener { _, _, pos, _ ->
                 val selectedItem = adapter.getItem(pos)
                 if (selectedItem != null) {
                     AppState.selectedImageLocale1 = Locale(selectedItem.locale)
                 }
             }
 
-            autocomplete.text = SpannableStringBuilder(AppState.selectedImageLocale1.displayLanguage)
+            iAutocomplete.text = SpannableStringBuilder(AppState.selectedImageLocale1.displayLanguage)
 
             val cameraButton = view.findViewById<Button>(R.id.iCameraButton)
             cameraButton.setOnClickListener {

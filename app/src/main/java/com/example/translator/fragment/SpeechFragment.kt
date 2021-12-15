@@ -68,7 +68,7 @@ class SpeechFragment : Fragment() {
         }
 
         val autocomplete1 = view.findViewById<AutoCompleteTextView>(R.id.slSpinner1)
-        val adapter1 = AutocompleteLocaleAdapter(view.context, AutocompleteLocale.locales)
+        val adapter1 = AutocompleteLocaleAdapter(view.context, AutocompleteLocale.locales.toMutableList())
         autocomplete1.setAdapter(adapter1)
         autocomplete1.setOnItemClickListener { _, _, pos, _ ->
             val selectedItem = adapter1.getItem(pos)
@@ -80,7 +80,7 @@ class SpeechFragment : Fragment() {
         }
 
         val autocomplete2 = view.findViewById<AutoCompleteTextView>(R.id.slSpinner2)
-        val adapter2 = AutocompleteLocaleAdapter(view.context, AutocompleteLocale.locales)
+        val adapter2 = AutocompleteLocaleAdapter(view.context, AutocompleteLocale.locales.toMutableList())
         autocomplete2.setAdapter(adapter2)
         autocomplete2.setOnItemClickListener { _, _, pos, _ ->
             val selectedItem = adapter2.getItem(pos)

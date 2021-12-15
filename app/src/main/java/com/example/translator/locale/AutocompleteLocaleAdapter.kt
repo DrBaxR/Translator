@@ -11,12 +11,13 @@ import com.example.translator.R
 
 class AutocompleteLocaleAdapter(
     private val mContext: Context,
-    private val items: MutableList<AutocompleteLocale>
+    private var items: MutableList<AutocompleteLocale>
 ) :
     ArrayAdapter<AutocompleteLocale>(mContext, 0, items) {
 
     val suggestions = mutableListOf<AutocompleteLocale>()
     val tempItems = mutableListOf(*items.toTypedArray())
+    private val filter = LanguageFilter()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var view = convertView
@@ -37,7 +38,7 @@ class AutocompleteLocaleAdapter(
     }
 
     override fun getFilter(): Filter {
-        return LanguageFilter()
+        return filter
     }
 
     inner class LanguageFilter : Filter() {

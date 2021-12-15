@@ -5,7 +5,7 @@ data class AutocompleteLocale(
     val locale: String
 ) {
     companion object {
-        val locales: MutableList<AutocompleteLocale> = mutableListOf(
+        val locales: List<AutocompleteLocale> = listOf(
             AutocompleteLocale("Afrikaans", "af"),
             AutocompleteLocale("Albanian", "sq"),
             AutocompleteLocale("Arabic", "ar"),

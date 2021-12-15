@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.Spinner
 import com.example.translator.R
 import com.example.translator.locale.*
 import com.example.translator.services.PremiumService
@@ -36,17 +35,17 @@ class TextFragment : Fragment() {
             tTextField2.editText?.isFocusable = false
             val tTextField1 = view.findViewById<TextInputLayout>(R.id.tTextField1)
 
-            val autocomplete = view.findViewById<AutoCompleteTextView>(R.id.tSpinner)
-            val adapter = AutocompleteLocaleAdapter(view.context, AutocompleteLocale.locales)
-            autocomplete.setAdapter(adapter)
-            autocomplete.setOnItemClickListener { _, _, pos, _ ->
+            val tAutocomplete = view.findViewById<AutoCompleteTextView>(R.id.tSpinner)
+            val adapter = AutocompleteLocaleAdapter(view.context, AutocompleteLocale.locales.toMutableList())
+            tAutocomplete.setAdapter(adapter)
+            tAutocomplete.setOnItemClickListener { _, _, pos, _ ->
                 val selectedItem = adapter.getItem(pos)
                 if (selectedItem != null) {
                     AppState.selectedTextLocale1 = Locale(selectedItem.locale)
                 }
             }
 
-            autocomplete.text = SpannableStringBuilder(AppState.selectedTextLocale1.displayLanguage)
+            tAutocomplete.text = SpannableStringBuilder(AppState.selectedTextLocale1.displayLanguage)
 
             val button = view.findViewById<Button>(R.id.tButton)
 
