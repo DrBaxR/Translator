@@ -1,5 +1,6 @@
 package com.example.translator.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.transition.AutoTransition
@@ -14,6 +15,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.cardview.widget.CardView
 import com.example.translator.R
+import com.example.translator.imageRecognition.StorageRecognitionActivity
 import com.example.translator.locale.*
 import com.example.translator.services.PremiumService
 import com.example.translator.state.AppState
@@ -21,6 +23,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.*
+import java.io.File
 import java.util.*
 
 class TextFragment : Fragment() {
@@ -56,6 +59,11 @@ class TextFragment : Fragment() {
                 if (selectedItem != null) {
                     AppState.selectedTextLocale1 = Locale(selectedItem.locale)
                 }
+            }
+
+            val fileFromStorageButton= view.findViewById<Button>(R.id.tFileFromStorage)
+            fileFromStorageButton.setOnClickListener {
+                file_chooser()
             }
 
             arrow1.setOnClickListener {
@@ -124,6 +132,13 @@ class TextFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun file_chooser() {
+        val i = Intent()
+        i.type = "txt/*"
+        i.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(i, "Selected File"), 200)
     }
 
     private fun translateText(text: String?, textField: TextInputLayout) {
