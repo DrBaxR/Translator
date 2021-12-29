@@ -1,10 +1,13 @@
 package com.example.translator.fragment
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.text.SpannableStringBuilder
 import android.transition.AutoTransition
 import android.transition.TransitionManager
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,12 +26,16 @@ import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.*
-import java.io.File
 import java.util.*
+import androidx.core.app.ActivityCompat.startActivityForResult
+import android.R.attr.text
+import java.io.*
+import java.lang.StringBuilder
+
 
 class TextFragment : Fragment() {
     private lateinit var databaseReference: DatabaseReference
-
+    private lateinit var tTextField1: TextInputLayout
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,7 +56,7 @@ class TextFragment : Fragment() {
 
             val tTextField2 = view.findViewById<TextInputLayout>(R.id.tTextField2)
             tTextField2.editText?.isFocusable = false
-            val tTextField1 = view.findViewById<TextInputLayout>(R.id.tTextField1)
+            tTextField1 = view.findViewById<TextInputLayout>(R.id.tTextField1)
 
             val tAutocomplete = view.findViewById<AutoCompleteTextView>(R.id.tSpinner)
             val adapter = AutocompleteLocaleAdapter(view.context, AutocompleteLocale.locales.toMutableList())
@@ -67,14 +74,7 @@ class TextFragment : Fragment() {
             }
 
             arrow1.setOnClickListener {
-                // If the CardView is already expanded, set its visibility
-                //  to gone and change the expand less icon to expand more.
                 if (hiddenView1.visibility === View.VISIBLE) {
-
-                    // The transition of the hiddenView is carried out
-                    //  by the TransitionManager class.
-                    // Here we use an object of the AutoTransition
-                    // Class to create a default transition.
                     TransitionManager.beginDelayedTransition(
                         cardView1,
                         AutoTransition()
@@ -92,14 +92,7 @@ class TextFragment : Fragment() {
             }
 
             arrow2.setOnClickListener {
-                // If the CardView is already expanded, set its visibility
-                //  to gone and change the expand less icon to expand more.
                 if (hiddenView2.visibility === View.VISIBLE) {
-
-                    // The transition of the hiddenView is carried out
-                    //  by the TransitionManager class.
-                    // Here we use an object of the AutoTransition
-                    // Class to create a default transition.
                     TransitionManager.beginDelayedTransition(
                         cardView2,
                         AutoTransition()
@@ -136,9 +129,25 @@ class TextFragment : Fragment() {
 
     private fun file_chooser() {
         val i = Intent()
-        i.type = "txt/*"
+        i.type = "text/*"
         i.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(i, "Selected File"), 200)
+        startActivityForResult(Intent.createChooser(i, "Selected File"), 201)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 201 && resultCode == RESULT_OK) {
+            val selectedFile = data?.data //The uri with the location of the file
+
+            try {
+                val inputStreamReader = InputStreamReader(this.context?.contentResolver?.openInputStream(selectedFile!!))
+                val bufferedReader = BufferedReader(inputStreamReader)
+                tTextField1.editText?.text = SpannableStringBuilder(bufferedReader.readText())
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
     }
 
     private fun translateText(text: String?, textField: TextInputLayout) {
